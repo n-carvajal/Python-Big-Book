@@ -97,6 +97,7 @@ class Player:
         Removes bet amount from the player's total.
         """
         self.bankroll -= amount
+        return amount
 
     def collect_winnings(self, amount):
         """

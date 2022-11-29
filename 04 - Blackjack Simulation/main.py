@@ -4,26 +4,52 @@
 from deck import Deck
 from player import Player
 
+# TODO Introduce Game.
+# TODO Ask how many decks to use.
+# TODO Ask size of bet.
+# TODO Ask for replay after X rounds if winning Y if losing.
+
 # Deck and Player class instantiation
 shoe = Deck()
 player = Player("Nico", 1000)
 house = Player("House", 1000)
 
 # Setup number of decks in shoe
-shoe_decks = 6
-for _ in range(shoe_decks):
+decks_in_play = 6
+for _ in range(decks_in_play):
     shoe.create()
 
 # Shuffle shoe
 shoe.shuffle()
 
+# Established bet amount.
+bet_amount = 10
+
+# Have player and house place bets.
+bet = player.bet(bet_amount) + house.bet(bet_amount)
+
 # Have player and house gather 2 dealt cards from shoe.
 player.gather_hand(shoe.deal(2))
 house.gather_hand(shoe.deal(2))
 
-# Show player and house hands
+# Show and score player and house hands
+print(f"{player.name} has: ")
 player.show_hand()
+player.score_hand()
+print(f"{house.name} has: ")
 house.show_hand(show_all=False)
+house.score_hand()
+
+if player.score_hand() == house.score_hand():
+    player.collect_winnings(round(bet/2))
+    house.collect_winnings(round(bet/2))
+elif player.score_hand() > house.score_hand():
+    player.collect_winnings(bet)
+else:
+    house.collect_winnings(bet)
+
+print(player)
+print(house)
 
 # import random
 
