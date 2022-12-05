@@ -71,3 +71,4 @@ class Deck:
         for _ in range(quantity):
             dealt_cards.append(self.all_cards.pop())
         return dealt_cards
+        

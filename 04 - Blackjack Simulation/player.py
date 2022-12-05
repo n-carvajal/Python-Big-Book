@@ -18,7 +18,7 @@ class Player:
         """
         Returns print string for Player object
         """
-        return f"{self.name} has a bankroll of ${self.bankroll}"
+        return f"{self.name} has a bankroll of ${round(self.bankroll)}"
 
     def gather_hand(self, cards):
         """
