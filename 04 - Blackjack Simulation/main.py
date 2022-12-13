@@ -30,7 +30,7 @@ def deck_count():
     Returns decks as an integer.
     """
     while True:
-        decks = input("\nHow many decks would like to play with? (1-6):")
+        decks = input("\nHow many decks would like to play with? (1-6): ")
         if decks.isdigit() and int(decks) > 0 and int(decks) < 7:
             return int(decks)
         else:
@@ -39,14 +39,16 @@ def deck_count():
 
 def start_cash():
     """
-    Asks user how much cash they would like to start with in multiples 
-    of 100 and validates their response to ensure it is within the 
+    Asks user how much cash they would like to start with in multiples
+    of 100 and validates their response to ensure it is within the
     required parameter.
     Returns cash as an integer.
     """
     while True:
-        cash = input("\nHow much cash do you want to start with?\nEnter "
-                     "a number in multiples of $100: $")
+        cash = input(
+            "\nHow much cash do you want to start with?\nEnter "
+            "a number in multiples of $100: $"
+        )
         if cash.isdigit() and int(cash) % 100 == 0:
             return int(cash)
         else:
@@ -70,6 +72,23 @@ def double_down():
             print("You did not enter (Y)es or (N)o.")
 
 
+def hit():
+    """
+    Asks player if they would like to (H)it or (S)stand and validates
+    their response to ensure they only enter 'H' or 'S'.
+    Returns True if 'H'.
+    Returns False if 'S'.
+    """
+    while True:
+        answer = input("\nWould you like to (H)it or (S)tand: ").lower()
+        if answer == "h":
+            return True
+        elif answer == "s":
+            return False
+        else:
+            print("You did not enter (H)it or (S)tand.")
+
+
 # Introduce Game.
 print("\nWelcome to Blackjack 21")
 print("by Nicolas Carvajal\n")
@@ -80,14 +99,16 @@ print("\t\tAces are worth 1 or 11 points.")
 print("\t\tCards 2 through 10 are worth their face value.")
 print("\t\t(H)it to take another card.")
 print("\t\t(S)tand to stop taking cards.")
-print("\t\tOn your first play you can double down to increase your bet but"
-      "must hit exactly one more time before standing.")
+print(
+    "\t\tOn your first play you can double down to increase your bet but"
+    "must hit exactly one more time before standing."
+)
 print("\t\tIn case of a tie, the bet is returned to the player.")
 print("\t\tThe dealer must hit if their hand is less than 17.")
 
 # Ask to start game.
 if start_game():
-    
+
     # Ask how many decks to play with.
     game_decks = deck_count()
 
@@ -109,7 +130,7 @@ if start_game():
     shoe.shuffle()
 
     # Set game bet amount.
-    bet_amount = bankroll/10
+    bet_amount = bankroll / 10
 
     # Introduce player and house.
     print("\nOK let's start.")
@@ -135,7 +156,7 @@ if start_game():
 
     # Ask if player if they would like to double down.
     if double_down():
-        
+
         # Increase bet for player and house.
         bet += player.bet(bet_amount) + house.bet(bet_amount)
 
@@ -149,7 +170,14 @@ if start_game():
         print(f"{house.name} has: ")
         house.show_hand(show_all=False)
 
-        # Check for winner. 
+        # TODO: Use while loop to ask hit or miss?
+        # Check if player still in game.
+        if player.score_hand() > 21:
+            house.collect_winnings(bet)
+            print("Sorry you are bust.")
+        else:
+            if hit():
+                pass
 
     else:
         print("NO")
