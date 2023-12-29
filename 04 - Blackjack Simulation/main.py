@@ -108,7 +108,6 @@ print("\t\tThe dealer must hit if their hand is less than 17.")
 
 # Ask to start game.
 if start_game():
-
     # Ask how many decks to play with.
     game_decks = deck_count()
 
@@ -156,7 +155,6 @@ if start_game():
 
     # Ask if player if they would like to double down.
     if double_down():
-
         # Increase bet for player and house.
         bet += player.bet(bet_amount) + house.bet(bet_amount)
 
